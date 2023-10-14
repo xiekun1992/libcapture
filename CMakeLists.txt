@@ -1,11 +1,9 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.22)
 
 project(libcapture)
 
 set(
   SRC
-  # ./src/input/mouse.c
-  # ./src/input/keyboard.c
   ./src/input/listener.c
   # ./src/clipboard/clipboard.c
   ./src/utils.c
