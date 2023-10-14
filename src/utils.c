@@ -9,3 +9,8 @@ DLL_EXPORT void utils_open(wchar_t *path) {
   info.lpParameters = path;
   ShellExecuteEx(&info);
 }
+
+DLL_EXPORT void get_screen_size(int size[2]) {
+  size[0] = GetSystemMetrics(SM_CXSCREEN);
+  size[1] = GetSystemMetrics(SM_CYSCREEN);
+}

@@ -13,3 +13,4 @@
 #endif
 
 DLL_EXPORT void utils_open(wchar_t *path);
+DLL_EXPORT void get_screen_size(int size[2]);

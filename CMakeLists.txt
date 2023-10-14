@@ -4,10 +4,10 @@ project(libcapture)
 
 set(
   SRC
-  ./src/input/mouse.c
-  ./src/input/keyboard.c
+  # ./src/input/mouse.c
+  # ./src/input/keyboard.c
   ./src/input/listener.c
-  ./src/clipboard/clipboard.c
+  # ./src/clipboard/clipboard.c
   ./src/utils.c
 )
 

@@ -22,7 +22,7 @@ DLL_EXPORT void keyboard_dispose() {
 #endif
 }
 
-DLL_EXPORT int charToKeycode(int scancode) {
+DLL_EXPORT int scancode_to_keycode(int scancode) {
   // VkKeyScanEx(keystr.at(0), context.kbl);
 #if __linux == 1
 #elif _WIN32 == 1
@@ -32,13 +32,18 @@ DLL_EXPORT int charToKeycode(int scancode) {
 }
 
 DLL_EXPORT bool keydown(int scancode) {
-  int code = charToKeycode(scancode);
+  int code = scancode_to_keycode(scancode);
   if (code > 0) {
 #if __linux == 1
     unsigned int keycode = XKeysymToKeycode(display, code);
     XTestFakeKeyEvent(display, keycode, True, 0);
     XFlush(display);
 #elif _WIN32 == 1
+    context.kbl = GetKeyboardLayout(0);
+    context.ip.type = INPUT_KEYBOARD;
+    context.ip.ki.time = 0;
+    context.ip.ki.dwExtraInfo = 0;
+    context.ip.ki.wScan = 0;
     context.ip.ki.dwFlags = 0 | KEYEVENTF_EXTENDEDKEY;
     context.ip.ki.wVk = code;
     SendInput(1, &context.ip, sizeof(INPUT));
@@ -49,13 +54,18 @@ DLL_EXPORT bool keydown(int scancode) {
 }
 
 DLL_EXPORT bool keyup(int scancode) {
-  int code = charToKeycode(scancode);
+  int code = scancode_to_keycode(scancode);
   if (code > 0) {
 #if __linux == 1
     unsigned int keycode = XKeysymToKeycode(display, code);
     XTestFakeKeyEvent(display, keycode, False, 0);
     XFlush(display);
 #elif _WIN32 == 1
+    context.kbl = GetKeyboardLayout(0);
+    context.ip.type = INPUT_KEYBOARD;
+    context.ip.ki.time = 0;
+    context.ip.ki.dwExtraInfo = 0;
+    context.ip.ki.wScan = 0;
     context.ip.ki.dwFlags = KEYEVENTF_KEYUP | KEYEVENTF_EXTENDEDKEY;
     context.ip.ki.wVk = code;
     SendInput(1, &context.ip, sizeof(INPUT));

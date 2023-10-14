@@ -19,11 +19,11 @@ LRESULT CALLBACK keyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
     }
   }
   // printf("%ld %ld %ld\n", wParam, hookStruct->vkCode, hookStruct->scanCode);
-  // if (blocking) {
-  //   if (!(hookStruct->vkCode == 20 || hookStruct->vkCode == 144 || hookStruct->vkCode == 145)) { // Not thses keys: caps lock / num lock / scroll lock
-  //     return 1; // disable key
-  //   }
-  // }
+  if (context.blocking) {
+    if (!(hookStruct->vkCode == 20 || hookStruct->vkCode == 144 || hookStruct->vkCode == 145)) { // Not thses keys: caps lock / num lock / scroll lock
+      // return 1; // disable key
+    }
+  }
   return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
 
@@ -79,9 +79,9 @@ LRESULT CALLBACK mouseHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
   //        /* X */ int(screen_centre_x + cos(angle) * 300),/* Y */ int(screen_centre_y + sin(angle) * 300)
   //    );
   // printf("blocking = %d\n", blocking);
-  // if (blocking) {
-  //   return 1; // disable key
-  // }
+  if (context.blocking) {
+    return 1; // disable key
+  }
   return CallNextHookEx(NULL, nCode, wParam, lParam);
 }
 
@@ -92,6 +92,13 @@ LRESULT CALLBACK deviceHookProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
     UINT size = sizeof(input);
     GetRawInputData(hRawInput, RID_INPUT, &input, &size, sizeof(RAWINPUTHEADER));
     // printf("mouse rel move = %ld, %ld\n", input.data.mouse.lLastX, input.data.mouse.lLastY);
+    if (MOUSE_MOVE_RELATIVE == input.data.mouse.usFlags) {
+      // printf("mouse rel %d, move = %ld, %ld\n", input.data.mouse.usFlags, input.data.mouse.lLastX, input.data.mouse.lLastY);
+      if (context.blocking) {
+        long params[5] = {L_MOUSEMOVEREL, input.data.mouse.lLastX, input.data.mouse.lLastY, 0, 0};
+        context.mouseHanlder(params);
+      }
+    }
   }
   return DefWindowProc(hwnd, msg, wParam, lParam);
 }
