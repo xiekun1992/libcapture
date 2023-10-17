@@ -21,7 +21,7 @@ LRESULT CALLBACK keyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
   // printf("%ld %ld %ld\n", wParam, hookStruct->vkCode, hookStruct->scanCode);
   if (context.blocking) {
     if (!(hookStruct->vkCode == 20 || hookStruct->vkCode == 144 || hookStruct->vkCode == 145)) { // Not thses keys: caps lock / num lock / scroll lock
-      // return 1; // disable key
+      return 1; // disable key
     }
   }
   return CallNextHookEx(NULL, nCode, wParam, lParam);
