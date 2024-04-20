@@ -15,5 +15,6 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
   cp -f ./libcapture.so ../../lctrl_rust/
 elif [[ $OSTYPE == "msys" ]]; then
   # cp -f ./Debug/libcapture.dll ./Debug/libcapture.lib /e/Desktop/hello/
-  cp -f ./Debug/libcapture.dll ./Debug/libcapture.lib ../../lctrl_rust/
+  cp -f ./Debug/libcapture.dll ./Debug/libcapture.lib D:/rust_workspaces/lctrl_rust/
+  cp -f ./Debug/libcapture.dll D:/rust_workspaces/lctrl_rust/target/debug/
 fi
