@@ -5,6 +5,8 @@ project(libcapture)
 set(
   SRC
   ./src/input/listener.c
+  ./src/input/keyboard.c
+  ./src/input/mouse.c
   # ./src/clipboard/clipboard.c
   ./src/utils.c
 )
