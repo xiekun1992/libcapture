@@ -68,13 +68,16 @@ DLL_EXPORT wchar_t *read_text()
 {
     wchar_t *empty = L"";
 #if _WIN32 == 1
-    OpenClipboard(0);
-
-    if (!IsClipboardFormatAvailable(CF_UNICODETEXT))
+    if (!OpenClipboard(0))
     {
         return empty;
     }
 
+    if (!IsClipboardFormatAvailable(CF_UNICODETEXT))
+    {
+        CloseClipboard();
+        return empty;
+    }
     HANDLE handle = (HANDLE)GetClipboardData(CF_UNICODETEXT);
     if (handle != NULL)
     {
@@ -82,7 +85,6 @@ DLL_EXPORT wchar_t *read_text()
         if (buffer != NULL)
         {
             wcscpy(clipboard_context.content, buffer);
-
             GlobalUnlock(handle);
             CloseClipboard();
             return clipboard_context.content;
