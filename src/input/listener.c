@@ -19,6 +19,34 @@ LRESULT CALLBACK keyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam)
     case WM_SYSKEYDOWN:
     {
         long params[7] = {L_KEYDOWN, (long)hookStruct->vkCode, (long)keycode_to_scancode(hookStruct->vkCode)};
+        if (hookStruct->vkCode == VK_LCONTROL)
+        {
+            context.is_lcontrol_down = true;
+        }
+        if (hookStruct->vkCode == VK_LSHIFT)
+        {
+            context.is_lshift_down = true;
+        }
+        if (hookStruct->vkCode == VK_LWIN)
+        {
+            context.is_lwin_down = true;
+        }
+        if (hookStruct->vkCode == VK_LMENU)
+        {
+            context.is_lalt_down = true;
+        }
+        if (hookStruct->vkCode == VK_ESCAPE)
+        {
+            context.is_escape_down = true;
+        }
+        if (context.is_lcontrol_down &&
+            context.is_lshift_down &&
+            context.is_lwin_down &&
+            context.is_lalt_down &&
+            context.is_escape_down)
+        {
+            context.hotkeyHandler();
+        }
         context.keyboardHanlder(params);
         break;
     }
@@ -26,6 +54,26 @@ LRESULT CALLBACK keyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam)
     case WM_SYSKEYUP:
     {
         long params[7] = {L_KEYUP, (long)hookStruct->vkCode, (long)keycode_to_scancode(hookStruct->vkCode)};
+        if (hookStruct->vkCode == VK_LCONTROL)
+        {
+            context.is_lcontrol_down = false;
+        }
+        if (hookStruct->vkCode == VK_LSHIFT)
+        {
+            context.is_lshift_down = false;
+        }
+        if (hookStruct->vkCode == VK_LWIN)
+        {
+            context.is_lwin_down = false;
+        }
+        if (hookStruct->vkCode == VK_LMENU)
+        {
+            context.is_lalt_down = false;
+        }
+        if (hookStruct->vkCode == VK_ESCAPE)
+        {
+            context.is_escape_down = false;
+        }
         context.keyboardHanlder(params);
         break;
     }
@@ -237,10 +285,17 @@ void callback(XPointer pointer, XRecordInterceptData *hook)
 
 DLL_EXPORT void listener_init(
     void (*mouseHanlder)(long *),
-    void (*keyboardHanlder)(long *))
+    void (*keyboardHanlder)(long *),
+    void (*hotkeyHandler)(void))
 {
     context.mouseHanlder = mouseHanlder;
     context.keyboardHanlder = keyboardHanlder;
+    context.hotkeyHandler = hotkeyHandler;
+    context.is_lcontrol_down = false;
+    context.is_lshift_down = false;
+    context.is_lwin_down = false;
+    context.is_lalt_down = false;
+    context.is_escape_down = false;
     context.blocking = false;
 
 #if _WIN32 == 1

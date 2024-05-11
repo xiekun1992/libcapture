@@ -22,46 +22,54 @@
 #include <X11/extensions/XTest.h>
 
 /* for this struct, refer to libxnee */
-typedef union {
-  unsigned char    type ;
-  xEvent           event ;
-  xResourceReq     req   ;
-  xGenericReply    reply ;
-  xError           error ;
-  xConnSetupPrefix setup;
+typedef union
+{
+    unsigned char type;
+    xEvent event;
+    xResourceReq req;
+    xGenericReply reply;
+    xError error;
+    xConnSetupPrefix setup;
 } XRecordDatum;
 
 #endif
 
-#define L_MOUSEWHEEL            0
-#define L_MOUSEMOVE             1
-#define L_MOUSEDOWN             2
-#define L_MOUSEUP               3
-#define L_KEYDOWN               4
-#define L_KEYUP                 5
-#define L_MOUSEMOVEREL          6
+#define L_MOUSEWHEEL 0
+#define L_MOUSEMOVE 1
+#define L_MOUSEDOWN 2
+#define L_MOUSEUP 3
+#define L_KEYDOWN 4
+#define L_KEYUP 5
+#define L_MOUSEMOVEREL 6
 
-#define L_MOUSE_BUTTON_LEFT     1
-#define L_MOUSE_BUTTON_MIDLLE   2
-#define L_MOUSE_BUTTON_RIGHT    3
+#define L_MOUSE_BUTTON_LEFT 1
+#define L_MOUSE_BUTTON_MIDLLE 2
+#define L_MOUSE_BUTTON_RIGHT 3
 
-struct Listener {
-  void (*mouseHanlder)(long *);
-  void (*keyboardHanlder)(long *);
-  bool blocking;
+struct Listener
+{
+    void (*mouseHanlder)(long *);
+    void (*keyboardHanlder)(long *);
+    void (*hotkeyHandler)(void);
+    bool blocking;
+    bool is_lcontrol_down;
+    bool is_lshift_down;
+    bool is_lwin_down;
+    bool is_lalt_down;
+    bool is_escape_down;
 #if _WIN32 == 1
-  HHOOK mouseHook;
-  HHOOK keyboardHook;
+    HHOOK mouseHook;
+    HHOOK keyboardHook;
 #elif __linux == 1
-  Display* data_display = NULL;
-  Display* ctrl_display = NULL;
+    Display *data_display = NULL;
+    Display *ctrl_display = NULL;
 #endif
 };
 
 DLL_EXPORT void listener_init(
-  void (*mouseHanlder)(long *),
-  void (*keyboardHanlder)(long *)
-);
+    void (*mouseHanlder)(long *),
+    void (*keyboardHanlder)(long *),
+    void (*hotkeyHandler)(void));
 DLL_EXPORT void listener_dispose();
 DLL_EXPORT void listener_listen();
 DLL_EXPORT void listener_close();
