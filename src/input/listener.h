@@ -50,7 +50,7 @@ struct Listener
 {
     void (*mouseHanlder)(long *);
     void (*keyboardHanlder)(long *);
-    void (*hotkeyHandler)(void);
+    void (*hotkeyHandler)(long[5][7]);
     bool blocking;
     bool is_lcontrol_down;
     bool is_lshift_down;
@@ -69,7 +69,7 @@ struct Listener
 DLL_EXPORT void listener_init(
     void (*mouseHanlder)(long *),
     void (*keyboardHanlder)(long *),
-    void (*hotkeyHandler)(void));
+    void (*hotkeyHandler)(long[5][7]));
 DLL_EXPORT void listener_dispose();
 DLL_EXPORT void listener_listen();
 DLL_EXPORT void listener_close();
