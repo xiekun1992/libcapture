@@ -1,5 +1,6 @@
 #pragma once
 #include "../export.h"
+#include "helper.h"
 
 // #include <stdio.h>
 // #include <stdlib.h>
@@ -17,21 +18,23 @@
 
 typedef struct mouse
 {
-  Display* display;
-  Window root;
+    Display *display;
+    Window root;
 } Mouse;
 
 #endif
 
-enum MouseButton {
-  MOUSE_LEFT = 1,
-  MOUSE_MIDDLE,
-  MOUSE_RIGHT
+enum MouseButton
+{
+    MOUSE_LEFT = 1,
+    MOUSE_MIDDLE,
+    MOUSE_RIGHT
 };
 
-enum MouseWheel {
-  WHEEL_UP = -1,
-  WHEEL_DOWN = 1
+enum MouseWheel
+{
+    WHEEL_UP = -1,
+    WHEEL_DOWN = 1
 };
 
 DLL_EXPORT void mouse_init();

@@ -8,6 +8,8 @@
 #if _WIN32 == 1
 #define DLL_EXPORT __declspec(dllexport)
 #include <windows.h>
+// #include <wtsapi32.h>
+#pragma comment(lib, "Wtsapi32.lib")
 
 #elif __linux == 1
 

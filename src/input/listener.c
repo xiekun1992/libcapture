@@ -162,6 +162,40 @@ LRESULT CALLBACK mouseHookProc(int nCode, WPARAM wParam, LPARAM lParam)
 
 LRESULT CALLBACK deviceHookProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+    // switch (msg)
+    // {
+    // case WM_CREATE:
+    //     if (WTSRegisterSessionNotification(hwnd, NOTIFY_FOR_ALL_SESSIONS))
+    //     {
+    //         printf("Session notifications registered successfully.");
+    //     }
+    //     else
+    //     {
+    //         printf("Failed to register session notifications. Error: ");
+    //     }
+    //     break;
+    // case WM_WTSSESSION_CHANGE:
+    //     switch (wParam)
+    //     {
+    //     case WTS_SESSION_LOCK:
+    //         printf("Session locked.");
+    //         break;
+    //     case WTS_SESSION_UNLOCK:
+    //         printf("Session unlocked.");
+    //         break;
+    //     case WTS_SESSION_LOGON:
+    //         printf("Session logon.");
+    //         break;
+    //     case WTS_SESSION_LOGOFF:
+    //         printf("Session logoff.");
+    //         break;
+    //     }
+    //     break;
+    // case WM_DESTROY:
+    //     WTSUnRegisterSessionNotification(hwnd);
+    //     PostQuitMessage(0);
+    //     break;
+    // }
     if (msg == WM_INPUT)
     {
         HRAWINPUT hRawInput = (HRAWINPUT)lParam;

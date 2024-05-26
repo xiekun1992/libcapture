@@ -7,8 +7,10 @@ set(
   ./src/input/listener.c
   ./src/input/keyboard.c
   ./src/input/mouse.c
+  ./src/input/helper.c
   ./src/clipboard/clipboard.c
   ./src/utils.c
+  ./src/service/service.c
 )
 
 # target_link_libraries($(PROJECT_NAME))

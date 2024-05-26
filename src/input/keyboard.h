@@ -1,5 +1,6 @@
 #pragma once
 #include "../export.h"
+#include "helper.h"
 
 #include <stdio.h>
 #include <stdbool.h>
