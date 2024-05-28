@@ -16,6 +16,38 @@ DLL_EXPORT void utils_open(wchar_t *path)
 
 #if _WIN32 == 1
 
+DLL_EXPORT BOOL is_run_as_admin()
+{
+    BOOL isAdmin = FALSE;
+    PSID adminGroup = NULL;
+    SID_IDENTIFIER_AUTHORITY ntAuthority = SECURITY_NT_AUTHORITY;
+
+    if (AllocateAndInitializeSid(&ntAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &adminGroup))
+    {
+        CheckTokenMembership(NULL, adminGroup, &isAdmin);
+        FreeSid(adminGroup);
+    }
+    return isAdmin;
+}
+
+DLL_EXPORT VOID run_as_admin()
+{
+    TCHAR szPath[MAX_PATH];
+    if (GetModuleFileName(NULL, szPath, ARRAYSIZE(szPath)))
+    {
+        SHELLEXECUTEINFO sei = {sizeof(sei)};
+        sei.lpVerb = L"runas";
+        sei.lpFile = szPath;
+        sei.hwnd = NULL;
+        sei.nShow = SW_NORMAL;
+        if (ShellExecuteEx(&sei))
+        {
+            // The program has been successfully started with elevated privileges.
+            ExitProcess(0);
+        }
+    }
+}
+
 BOOL CALLBACK monitor_fn(HMONITOR h_monitor, HDC hdc, LPRECT lp_rect, LPARAM dw_data)
 {
     RECT *screen_rect = (RECT *)dw_data;
