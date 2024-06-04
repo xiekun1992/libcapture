@@ -206,7 +206,7 @@ VOID run()
         }
     }
 
-    while (service_status.dwCurrentState == SERVICE_RUNNING)
+    while (service_status.dwCurrentState != SERVICE_STOPPED)
     {
         Sleep(1000);
     }

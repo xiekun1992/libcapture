@@ -1,19 +1,11 @@
 #pragma once
 #include "../export.h"
-
 #include <stdbool.h>
-
-#if _WIN32 == 1
-
-#define UNICODE
-#define SERVICE_NAME L"Lctrl"
-
 #include <windows.h>
 #include <tlhelp32.h>
 
-#elif __linux == 1
-
-#endif
+#define UNICODE
+#define SERVICE_NAME L"Lctrl"
 
 DLL_EXPORT int register_service();
 DLL_EXPORT VOID delete_service();
