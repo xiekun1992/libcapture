@@ -63,7 +63,7 @@ DLL_EXPORT void mouse_down(enum MouseButton button)
     SendInput(1, &input, sizeof(INPUT));
 }
 
-DLL_EXPORT void mouse_up(int button)
+DLL_EXPORT void mouse_up(enum MouseButton button)
 {
     switch_to_input_desktop();
     INPUT input;
