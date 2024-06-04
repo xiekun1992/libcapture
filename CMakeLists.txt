@@ -21,10 +21,7 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Linux")
         ./src/linux/input/listener.c
         ./src/linux/input/keyboard.c
         ./src/linux/input/mouse.c
-        ./src/linux/input/helper.c
-        ./src/linux/clipboard/clipboard.c
-        ./src/linux/utils.c
-        ./src/linux/service/service.c
+        # ./src/linux/clipboard/clipboard.c
     )
 else()
 endif()

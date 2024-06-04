@@ -5,14 +5,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#if _WIN32 == 1
-#define DLL_EXPORT __declspec(dllexport)
-#include <windows.h>
-// #include <wtsapi32.h>
-#pragma comment(lib, "Wtsapi32.lib")
-
-#elif __linux == 1
-
 #include <unistd.h>
 #include <X11/Xlibint.h>
 #include <X11/Xlib.h>
@@ -33,8 +25,6 @@ typedef union
     xError error;
     xConnSetupPrefix setup;
 } XRecordDatum;
-
-#endif
 
 #define L_MOUSEWHEEL 0
 #define L_MOUSEMOVE 1
@@ -59,13 +49,8 @@ struct Listener
     bool is_lwin_down;
     bool is_lalt_down;
     bool is_escape_down;
-#if _WIN32 == 1
-    HHOOK mouseHook;
-    HHOOK keyboardHook;
-#elif __linux == 1
     Display *data_display = NULL;
     Display *ctrl_display = NULL;
-#endif
 };
 
 DLL_EXPORT void listener_init(

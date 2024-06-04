@@ -1,15 +1,9 @@
 #pragma once
 #include "../export.h"
-#include "helper.h"
 
 // #include <stdio.h>
 // #include <stdlib.h>
 // #include <string.h>
-#if _WIN32 == 1
-
-#include <windows.h>
-
-#elif __linux == 1
 
 #include <unistd.h>
 #include <X11/Xlib.h>
@@ -21,8 +15,6 @@ typedef struct mouse
     Display *display;
     Window root;
 } Mouse;
-
-#endif
 
 enum MouseButton
 {
