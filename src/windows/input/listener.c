@@ -2,6 +2,15 @@
 
 struct Listener context;
 
+int resolve_ex_scancode(PKBDLLHOOKSTRUCT hookStruct)
+{
+    if (hookStruct->flags & 0x01 == 1)
+    {
+        return 0xe000 + hookStruct->scanCode;
+    }
+    return hookStruct->scanCode;
+}
+
 int keycode_to_scancode(int keycode)
 {
     int scancode = MapVirtualKey(keycode, MAPVK_VK_TO_VSC_EX);
@@ -16,7 +25,7 @@ LRESULT CALLBACK keyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam)
     case WM_KEYDOWN:
     case WM_SYSKEYDOWN:
     {
-        long params[7] = {L_KEYDOWN, (long)hookStruct->vkCode, (long)keycode_to_scancode(hookStruct->vkCode)};
+        long params[7] = {L_KEYDOWN, (long)hookStruct->vkCode, (long)resolve_ex_scancode(hookStruct)};
         if (hookStruct->vkCode == VK_LCONTROL)
         {
             context.is_lcontrol_down = true;
@@ -58,7 +67,7 @@ LRESULT CALLBACK keyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam)
     case WM_KEYUP:
     case WM_SYSKEYUP:
     {
-        long params[7] = {L_KEYUP, (long)hookStruct->vkCode, (long)keycode_to_scancode(hookStruct->vkCode)};
+        long params[7] = {L_KEYUP, (long)hookStruct->vkCode, (long)resolve_ex_scancode(hookStruct)};
         if (hookStruct->vkCode == VK_LCONTROL)
         {
             context.is_lcontrol_down = false;
@@ -83,7 +92,15 @@ LRESULT CALLBACK keyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam)
         break;
     }
     }
-    // printf("%ld %ld %ld\n", wParam, hookStruct->vkCode, hookStruct->scanCode);
+    // if (hookStruct->flags & 0x01 == 1)
+    // {
+    //     // expand key
+    //     printf("nCode=%ld, wParam=%ld, lParam=%ld, flags=%ld, vkcode=%ld, scancode=%ld\n", nCode, wParam, lParam, hookStruct->flags, hookStruct->vkCode, resolve_ex_scancode(hookStruct));
+    // }
+    // else
+    // {
+    //     printf("nCode=%ld, wParam=%ld, lParam=%ld, flags=%ld, vkcode=%ld, scancode=%ld\n", nCode, wParam, lParam, hookStruct->flags, hookStruct->vkCode, resolve_ex_scancode(hookStruct));
+    // }
     if (context.blocking)
     {
         // Not thses keys: caps lock / scroll lock
