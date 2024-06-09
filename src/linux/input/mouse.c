@@ -22,11 +22,11 @@ DLL_EXPORT void mouse_move(int x, int y)
 DLL_EXPORT void mouse_wheel(enum MouseWheel direction)
 { // -1: up, 1: down
     int button;
-    if (-1 == direction)
+    if (direction > 0)
     {
         button = Button4;
     }
-    if (1 == direction)
+    if (direction < 0)
     {
         button = Button5;
     }
@@ -42,7 +42,7 @@ DLL_EXPORT void mouse_down(enum MouseButton button)
     XFlush(mouse_context.display);
 }
 
-DLL_EXPORT void mouse_up(int button)
+DLL_EXPORT void mouse_up(enum MouseButton button)
 {
     XTestFakeButtonEvent(mouse_context.display, button, false, 0);
     XFlush(mouse_context.display);

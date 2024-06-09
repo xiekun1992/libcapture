@@ -49,8 +49,8 @@ struct Listener
     bool is_lwin_down;
     bool is_lalt_down;
     bool is_escape_down;
-    Display *data_display = NULL;
-    Display *ctrl_display = NULL;
+    Display *display;
+    Window root_window;
 };
 
 DLL_EXPORT void listener_init(

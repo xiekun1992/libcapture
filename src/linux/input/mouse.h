@@ -4,17 +4,17 @@
 // #include <stdio.h>
 // #include <stdlib.h>
 // #include <string.h>
-
+#include <stdbool.h>
 #include <unistd.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/extensions/XTest.h>
 
-typedef struct mouse
+struct Mouse
 {
     Display *display;
     Window root;
-} Mouse;
+};
 
 enum MouseButton
 {

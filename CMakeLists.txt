@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
-project(libcapture)
 
+set(PROJECT_NAME "libcapture")
 set(SRC)
 if (CMAKE_SYSTEM_NAME MATCHES "Windows") 
     list(
@@ -14,19 +14,40 @@ if (CMAKE_SYSTEM_NAME MATCHES "Windows")
         ./src/windows/utils.c
         ./src/windows/service/service.c
     )
-elseif(CMAKE_SYSTEM_NAME MATCHES "Linux")
+elseif(UNIX)
+    # set(PROJECT_NAME "capture")
     list(
         APPEND
         SRC
-        ./src/linux/input/listener.c
+        # ./src/linux/input/listener.c
+        # ./src/linux/input/listener.h
         ./src/linux/input/keyboard.c
+        ./src/linux/input/keyboard.h
         ./src/linux/input/mouse.c
+        ./src/linux/input/mouse.h
+        ./src/linux/utils.c
+        ./src/linux/utils.h
+        ./src/linux/export.h
         # ./src/linux/clipboard/clipboard.c
     )
 else()
 endif()
+
+project(${PROJECT_NAME})
+
+# 寻找 X11 库
+find_package(X11 REQUIRED)
+
+# 检查是否找到 X11 库
+if(NOT X11_FOUND)
+    message(FATAL_ERROR "X11 library not found")
+endif()
+
+# 添加 X11 头文件路径
+include_directories(${X11_INCLUDE_DIR})
 # target_link_libraries($(PROJECT_NAME))
 
 # add_executable(${PROJECT_NAME} ${SRC})
 
 add_library(${PROJECT_NAME} SHARED ${SRC})
+target_link_libraries(${PROJECT_NAME} ${X11_LIBRARIES} Xtst Xinerama)

@@ -21,7 +21,7 @@ int scancode_to_keycode(int scancode)
 
 DLL_EXPORT bool keydown(int *scancodes, int len)
 {
-    unsigned int keycode = XKeysymToKeycode(keyboard_context.display, code);
+    unsigned int keycode = XKeysymToKeycode(keyboard_context.display, scancodes[0]);
     XTestFakeKeyEvent(keyboard_context.display, keycode, True, 0);
     XFlush(keyboard_context.display);
     return true;
@@ -29,7 +29,7 @@ DLL_EXPORT bool keydown(int *scancodes, int len)
 
 DLL_EXPORT bool keyup(int *scancodes, int len)
 {
-    unsigned int keycode = XKeysymToKeycode(keyboard_context.display, code);
+    unsigned int keycode = XKeysymToKeycode(keyboard_context.display, scancodes[0]);
     XTestFakeKeyEvent(keyboard_context.display, keycode, False, 0);
     XFlush(keyboard_context.display);
     return true;
