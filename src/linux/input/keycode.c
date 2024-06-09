@@ -88,7 +88,7 @@ static int sc_to_key_map[128] = {
     // [SCANCODE_LEFT] = KEY_LEFT,
     // [SCANCODE_RIGHT] = KEY_RIGHT,
     // [SCANCODE_DOWN] = KEY_DOWN,
-    [SCANCODE_NUMLOCK] = KEY_NUMLOCK,
+    // [SCANCODE_NUMLOCK] = KEY_NUMLOCK,
     [SCANCODE_KPASTERISK] = KEY_KPASTERISK,
     [SCANCODE_KP7] = KEY_KP7,
     [SCANCODE_KP8] = KEY_KP8,
@@ -252,7 +252,10 @@ DLL_EXPORT int scancode_to_keycode(int scancode)
     return KEY_DOWN; // 0xe050
   if (SCANCODE_KPENTER == scancode)
     return KEY_KPENTER; // 0xe01c
+  if (SCANCODE_NUMLOCK == scancode)
+    return KEY_NUMLOCK; // 0xe045
 
+  printf("scancode=%d keycode=%d\n", scancode, sc_to_key_map[scancode]);
   return sc_to_key_map[scancode];
 }
 
