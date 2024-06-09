@@ -1,5 +1,6 @@
 #pragma once
 #include "../export.h"
+#include "keycode.h"
 
 #include <stdio.h>
 #include <stdbool.h>

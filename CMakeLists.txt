@@ -22,12 +22,9 @@ elseif(UNIX)
         # ./src/linux/input/listener.c
         # ./src/linux/input/listener.h
         ./src/linux/input/keyboard.c
-        ./src/linux/input/keyboard.h
         ./src/linux/input/mouse.c
-        ./src/linux/input/mouse.h
         ./src/linux/utils.c
-        ./src/linux/utils.h
-        ./src/linux/export.h
+        ./src/linux/input/keycode.c
         # ./src/linux/clipboard/clipboard.c
     )
 else()

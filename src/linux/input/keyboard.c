@@ -13,15 +13,10 @@ void keyboard_dispose()
     // display = NULL;
 }
 
-int scancode_to_keycode(int scancode)
-{
-    // VkKeyScanEx(keystr.at(0), keyboard_context.kbl);
-    return 0;
-}
-
 DLL_EXPORT bool keydown(int *scancodes, int len)
 {
-    unsigned int keycode = XKeysymToKeycode(keyboard_context.display, scancodes[0]);
+    unsigned int keycode = scancode_to_keycode(scancodes[0]);
+    // unsigned int keycode = XKeysymToKeycode(keyboard_context.display, scancodes[0]);
     XTestFakeKeyEvent(keyboard_context.display, keycode, True, 0);
     XFlush(keyboard_context.display);
     return true;
@@ -29,7 +24,8 @@ DLL_EXPORT bool keydown(int *scancodes, int len)
 
 DLL_EXPORT bool keyup(int *scancodes, int len)
 {
-    unsigned int keycode = XKeysymToKeycode(keyboard_context.display, scancodes[0]);
+    unsigned int keycode = scancode_to_keycode(scancodes[0]);
+    // unsigned int keycode = XKeysymToKeycode(keyboard_context.display, scancodes[0]);
     XTestFakeKeyEvent(keyboard_context.display, keycode, False, 0);
     XFlush(keyboard_context.display);
     return true;
