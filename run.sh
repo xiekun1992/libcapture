@@ -13,6 +13,7 @@ cmake --build .
 if [[ $OSTYPE == "linux-gnu" ]]; then
   # mv ./liblibcapture.so ./libcapture.so
   cp -f ./liblibcapture.so ../../lctrl_rust/
+  cp -f ./liblibcapture.so ../../lctrl_rust/target/debug/
   # sudo cp -f ./liblibcapture.so /usr/lib/
   echo "postprocess"
 elif [[ $OSTYPE == "msys" ]]; then

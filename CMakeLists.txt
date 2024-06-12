@@ -21,10 +21,11 @@ elseif(UNIX)
         SRC
         # ./src/linux/input/listener.c
         # ./src/linux/input/listener.h
-        ./src/linux/input/keyboard.c
-        ./src/linux/input/mouse.c
-        ./src/linux/utils.c
-        ./src/linux/input/keycode.c
+        # ./src/linux/input/keyboard.c
+        # ./src/linux/input/mouse.c
+        ./src/linux/input/input.c
+        ./src/linux/x11/utils.c
+        # ./src/linux/input/keycode.c
         # ./src/linux/clipboard/clipboard.c
     )
 else()
