@@ -1,5 +1,6 @@
+#pragma once
 #include "../export.h"
-// #include "./key.h"
+#include "./key.h"
 
 #include <stdio.h>
 #include <stdbool.h>
