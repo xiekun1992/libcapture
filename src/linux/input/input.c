@@ -52,7 +52,7 @@ DLL_EXPORT bool keyup(int *scancodes, int len)
   return true;
 }
 
-DLL_EXPORT void mouse_init()
+DLL_EXPORT void mouse_init(int left, int top, int right, int bottom)
 {
   struct uinput_user_dev usetup;
   input_context.fd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
@@ -90,12 +90,12 @@ DLL_EXPORT void mouse_init()
   usetup.id.version = 1;
   // strcpy(usetup.name, "lctrl device");
 
-  usetup.absmin[ABS_X] = 0;
-  usetup.absmax[ABS_X] = 1023;
+  usetup.absmin[ABS_X] = left;
+  usetup.absmax[ABS_X] = right;
   usetup.absfuzz[ABS_X] = 0;
   usetup.absflat[ABS_X] = 0;
-  usetup.absmin[ABS_Y] = 0;
-  usetup.absmax[ABS_Y] = 767;
+  usetup.absmin[ABS_Y] = top;
+  usetup.absmax[ABS_Y] = bottom;
   usetup.absfuzz[ABS_Y] = 0;
   usetup.absflat[ABS_Y] = 0;
 

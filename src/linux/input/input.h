@@ -34,7 +34,7 @@ DLL_EXPORT bool keyup(int *scancodes, int len);
 // void keyboard_dispose();
 // int scancode_to_keycode(int scancode);
 
-DLL_EXPORT void mouse_init();
+DLL_EXPORT void mouse_init(int left, int top, int right, int bottom);
 DLL_EXPORT void mouse_dispose();
 DLL_EXPORT void mouse_move(int x, int y);
 DLL_EXPORT void mouse_wheel(enum MouseWheel direction);
