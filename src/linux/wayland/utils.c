@@ -127,11 +127,11 @@ DLL_EXPORT RECT get_screen_size()
         {
             height = h;
         }
-        printf("Data: %d %d %d %d\n", obj->x, obj->y, obj->width, obj->height);
+        // printf("Data: %d %d %d %d\n", obj->x, obj->y, obj->width, obj->height);
         // wl_list_remove(&obj->link);
     }
 
-    printf("%d %d %d %d\n", x, y, width, height);
+    // printf("%d %d %d %d\n", x, y, width, height);
     rect.left = x;
     rect.top = y;
     rect.right = width;
